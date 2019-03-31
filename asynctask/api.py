@@ -22,6 +22,9 @@ class TaskExecutor(Thread):
         super().start()
         self.log.info("TaskExecutor started with [ %d ] threads" % len(self.threads))
 
+    def stop(self):
+        self.stopped = True
+
     def execute(self, task: Task):
         self.queue_lock.acquire()
         task_execution = TaskExecution(task)

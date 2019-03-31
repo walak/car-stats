@@ -1,8 +1,6 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
-from sys import argv
 
-from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, Response
 from jsonpickle import dumps
 from werkzeug.wsgi import FileWrapper
@@ -35,7 +33,6 @@ app = Flask(__name__)
 TASK_STORE = TaskStorage("resources/data/task")
 
 TASK_EXECUTOR = TaskExecutor(task_storage=TASK_STORE)
-TASK_EXECUTOR.start()
 
 FILE_SERVICE = FileService("resources/data/files")
 
@@ -107,4 +104,8 @@ def async_stats():
 
 
 if __name__ == "__main__":
+    TASK_EXECUTOR.start()
+
     app.run(host="0.0.0.0", port=8080, threaded=True)
+
+    TASK_EXECUTOR.stop()
