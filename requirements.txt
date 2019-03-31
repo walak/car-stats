@@ -1,0 +1,17 @@
+APScheduler==3.5.3
+Click==7.0
+Flask==1.0.2
+itsdangerous==1.1.0
+Jinja2==2.10
+jsonpickle==1.0
+lxml==4.3.2
+MarkupSafe==1.1.0
+pytz==2018.7
+selenium==3.141.0
+six==1.12.0
+sortedcontainers==2.1.0
+SQLAlchemy==1.2.15
+tzlocal==1.5.1
+urllib3==1.24.1
+Werkzeug==0.14.1
+XlsxWriter==1.1.5
