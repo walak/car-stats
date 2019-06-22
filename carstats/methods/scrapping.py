@@ -25,7 +25,7 @@ PAUSE_ADDITIONAL_TIME = 3
 OTOMOTO_HOST = "www.otomoto.pl"
 BASE_URL = "https://www.otomoto.pl/osobowe/%s/%s/"
 PAGE_URL = "https://www.otomoto.pl/osobowe/%s/%s/?page=%d"
-
+ALL_URL = "https://www.otomoto.pl/osobowe/"
 STRIPPER = lambda v: v.strip()
 NUMBER_FILTER = lambda v: sub(r"[^0-9,]", "", v).replace(",", ".")
 TO_INT = lambda v: int(round(float(v)))
@@ -51,6 +51,12 @@ def get_page_for_brand_and_model(http_connection, brand, model, page=None):
     return get(http_connection, url, **params)
 
 
+def get_page_for_all(http_connection, page=None):
+    url = ALL_URL
+    params = {"page": page} if page else {}
+    return get(http_connection, url, **params)
+
+
 def pause():
     pause_time = PAUSE_MIN_TIME + random() * PAUSE_ADDITIONAL_TIME
     LOG.info("Pausing for [ %.2f ] seconds" % pause_time)
@@ -62,6 +68,13 @@ def load_main_page(http_connection, brand, model):
                    max_attempts=5, wait_before_retry=5, before_retry_action=None,
                    retry_on_none=True, http_connection=http_connection,
                    brand=brand, model=model)
+    return html.fromstring(main_page)
+
+
+def load_all_result_page(http_connection, page=1):
+    main_page = do(action=get_page_for_all,
+                   max_attempts=5, wait_before_retry=5, before_retry_action=None,
+                   retry_on_none=True, http_connection=http_connection, page=page)
     return html.fromstring(main_page)
 
 

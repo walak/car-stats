@@ -5,7 +5,7 @@ from flask import Flask, Response
 
 from asynctask.api import TaskExecutor
 from asynctask.service import TaskStorage
-from carstats.api import GetCarsToXls
+from carstats.api import GetCarsToXls, CarBlotterTask
 from files.service import FileService
 from httpapi.methods import get_json_response, get_binary_response
 
@@ -75,8 +75,9 @@ def async_stats():
 
 
 if __name__ == "__main__":
+    CAR_SAVE_TASK = CarBlotterTask()
     TASK_EXECUTOR.start()
-
+    TASK_EXECUTOR.execute(CAR_SAVE_TASK)
     app.run(host="0.0.0.0", port=8080, threaded=True)
 
     TASK_EXECUTOR.stop()

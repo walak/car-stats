@@ -10,6 +10,17 @@ class CarEntry:
         self.drive = drive
         self.url = url
 
+    def to_dict(self):
+        return {
+            "brand": self.brand,
+            "model": self.model,
+            "title": self.title,
+            "price": self.price,
+            "year": self.year,
+            "fuel_id": self.fuel,
+            "url": self.url
+        }
+
 
 class CarScrapResult:
     def __init__(self, brand, model, results):
