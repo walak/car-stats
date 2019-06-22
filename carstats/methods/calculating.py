@@ -1,6 +1,6 @@
 from sortedcontainers import SortedDict
 
-from carstats.model import YearResult
+from carstats.model import YearResult, YearRange
 
 
 def trim_values(list_of_values, getter, trim_size=0.05):
@@ -30,6 +30,16 @@ def sort_lists_in_map(map_of_lists, reversed=False):
     for key in map_of_lists.keys():
         map_of_lists[key] = trim_values(sorted(map_of_lists[key], key=lambda c: c.price, reverse=reversed),
                                         lambda c: c.price, trim_size=0.02)
+
+
+def get_year_range(list_of_maps_of_list):
+    min_year = 9999
+    max_year = 0
+    for map_of_list in list_of_maps_of_list:
+        map_min = min(map_of_list.keys())
+        map_max = max(map_of_list.keys())
+        min_year = map_min if map_min < min_year else min_year
+        max_year = map_max if map_max > max_year else max_year
 
 
 def split_raw_results_to_year_map(results):

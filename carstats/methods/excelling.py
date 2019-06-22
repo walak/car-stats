@@ -26,6 +26,9 @@ def to_report(result):
                      values=values)
 
 
+def merge_reports(reports):
+    pass
+
 def generate_page_title(worksheet, title, style):
     worksheet.write(0, 0, title, style)
     worksheet.set_row(0, 35)
@@ -78,6 +81,15 @@ def generate_report_page(report, context: XlsxGenerationContext):
 
 
 def generate_xlsx_report(reports, output_stream):
+    workbook = Workbook(output_stream)
+    ctx = XlsxGenerationContext(workbook)
+    for report in reports:
+        generate_report_page(report, context=ctx)
+        generate_chart(report, context=ctx)
+
+    workbook.close()
+
+def generate_xlsx_report_for_multiple_cars(reports, output_stream):
     workbook = Workbook(output_stream)
     ctx = XlsxGenerationContext(workbook)
     for report in reports:

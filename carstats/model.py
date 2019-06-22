@@ -1,3 +1,6 @@
+from carstats.report_templates import CarReportTemplate
+
+
 class CarEntry:
     def __init__(self, title, brand, model, price, year, mileage, fuel, drive, url):
         self.title = title
@@ -36,6 +39,12 @@ class YearResult:
         self.url = url
 
 
+class YearRange:
+    def __init__(self, min_year, max_year):
+        self.min_year = min_year
+        self.max_year = max_year
+
+
 class CarAnalysisResult:
 
     def __init__(self, brand, model, result_map):
@@ -52,10 +61,27 @@ class CarAnalysisReport:
         self.scrap_task = scrap_task
 
 
+class Car(object):
+    pass
+
+
 class CarReport:
 
-    def __init__(self, title, page_header, headers, values):
+    def __init__(self, car: Car = None, template=CarReportTemplate, values):
         self.title = title
         self.page_header = page_header
         self.headers = headers
         self.values = values
+        self.report_type = None
+        self.min_value = None
+        self.max_value = None
+
+    @staticmethod
+    def from_template(car: Car, template: CarReportTemplate):
+        return CarReport
+
+
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
